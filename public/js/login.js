@@ -38,10 +38,10 @@ document.getElementById('loginForm').addEventListener('submit', async function (
             if (result.roleId == 1) {
                 // Redirect to cafeOwnerDashboard
                 console.log("ok")
-                window.location.href = "../View/member/registerMember.html";
+                window.location.href = "../View/admin/dashboard.html";
             } else {
                 // Redirect to studentDashboard
-                window.location.href = "homepage.html";
+                window.location.href = "dashboard.html";
             }
 
         } else {
