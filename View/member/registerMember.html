@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create an Account</title>
-    <link rel="stylesheet" href="../public/auth.css">
+    <link rel="stylesheet" href="../../public/auth.css">
 </head>
 <body>
     <div class="container">
@@ -22,7 +22,11 @@
                 <input type="password" id="password" name="password" required>
 
                 <label for="gender">Gender:</label>
-                <input type="text" id="gender" name="gender" required>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
 
                 <label for="birthDate">Birth Date:</label>
                 <input type="date" id="birthDate" name="birthDate" required>
@@ -34,8 +38,8 @@
             </form>
 
             <!-- Add the Login link here -->
-            <p>Already have an account? <a href="Login.html">Login</a></p>
+            <p>Already have an account? <a href="../../Login.html">Login</a></p>
         </main>
-        <script src="../public/js/registerMember.js"></script>
+        <script src="../../public/js/registerMember.js"></script>
 </body>
 </html>

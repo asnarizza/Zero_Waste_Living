@@ -59,7 +59,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
-input[type="file"] {
+input[type="file"],
+select {
     padding: 0.7em 0.5em 0.7em 2.5em;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -73,7 +74,8 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="date"]:focus,
-input[type="file"]:focus {
+input[type="file"]:focus,
+select:focus {
     border-color: #4CAF50;
     outline: none;
 }
