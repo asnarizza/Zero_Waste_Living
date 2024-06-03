@@ -46,21 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                 // Display the user data
-                echo json_encode($userData);
+                //echo json_encode($userData);
 
                 // Set the response
                 $response = [
-                    'status' => 'success',
-                    'message' => 'Login successful.',
-                    'user' => [
                         'userId' => $userData['userId'],
+                        'roleId' => $userData['roleId'],
                          'name' => $userData['name'],
                          'email' => $userData['email'],
                          'password' => $userData['password'],
                         'gender' => $userData['gender'],
                          'birthDate' => $userData['birthDate'],
                          'image' => $userData['image']
-                    ]
                 ];
             } else {
                 http_response_code(401);  // Unauthorized
