@@ -1,54 +1,27 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background: url('../public/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     margin: 0;
-    color: #333;
+    font-family: 'Arial', sans-serif;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
+.container {
+    display: flex;
+    min-height: 100vh;
 }
 
-header {
-    width: 100%;
-    background-color: rgba(76, 175, 80, 0.8);
-    padding: 1em 0;
-    text-align: center;
-    color: white;
-    z-index: 2;
-    position: relative;
-}
-
-.logo {
-    font-size: 2em;
-    font-weight: bold;
+.background-image {
+    flex: 1;
+    background: url('../public/images/background.jpg') no-repeat center center;
+    background-size: cover;
 }
 
 main {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2em;
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-    max-width: 450px;
-    width: 90%;
-    height: 90vh; /* Adjust height to fit within the viewport */
-    overflow-y: auto; /* Add scrollbar if content overflows */
-    z-index: 2;
-    position: relative;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    padding: 20px;
+    max-width: 50%;
 }
 
 form {
@@ -115,6 +88,7 @@ button {
     cursor: pointer;
     margin-top: 1.5em;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
 }
 
 button:hover {

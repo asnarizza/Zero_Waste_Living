@@ -7,38 +7,37 @@
     <link rel="stylesheet" href="../public/auth.css">
 </head>
 <body>
-    <header>
-        <div class="logo">ZERO WASTE LIVING</div>
-    </header>
-    <main>
-        <form action="../Controller/register.php" method="post" enctype="multipart/form-data">
-            <h2>Create an Account</h2>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+    <div class="container">
+        <div class="background-image"></div>
+        <main>
+            <form action="../Controller/register.php" method="post" enctype="multipart/form-data">
+                <h2>Create an Account</h2>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
 
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
 
-            <label for="gender">Gender:</label>
-            <input type="text" id="gender" name="gender" required>
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" name="gender" required>
 
-            <label for="birthDate">Birth Date:</label>
-            <input type="date" id="birthDate" name="birthDate" required>
+                <label for="birthDate">Birth Date:</label>
+                <input type="date" id="birthDate" name="birthDate" required>
 
-            <label for="image">Profile Image:</label>
-            <input type="file" id="image" name="image" required>
+                <label for="image">Profile Image:</label>
+                <input type="file" id="image" name="image" required>
 
-            <button type="submit">Create Account</button>
-        </form>
+                <button type="submit">Create Account</button>
+            </form>
 
-        <!-- Add the Login link here -->
-        <p>Already have an account? <a href="Login.html">Login</a></p>
-    </main>
+            <!-- Add the Login link here -->
+            <p>Already have an account? <a href="Login.html">Login</a></p>
+        </main>
 </body>
 </html>

@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <title>Create an Account</title>
+    <link rel="stylesheet" href="../public/auth.css">
 </head>
 <body>
-    <header>
-        <div class="logo">ZERO WASTE LIVING</div>
-    </header>
-    <main>
-        <form action="../Controller/login.php" method="post">
-            <h2>Login</h2>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Log in</button>
-        </form>
-        <!-- Add the Forgot Password link here -->
-        <p>Forgot your password? <a href="forgot_password.html">Reset it here</a></p>
-    </main>
+    <div class="container">
+        <div class="background-image"></div>
+        <main>
+            <form action="../Controller/login.php" method="post" enctype="multipart/form-data">
+                <h2>Login</h2>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- Add the Login link here -->
+            <p>Forgot your password? <a href="forgot_password.html">Reset it here</a></p>
+        </main>
 </body>
 </html>
