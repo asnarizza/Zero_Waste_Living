@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inspiration Hub</title>
     <link rel="stylesheet" href="../../public/member.css">
+    <style>
+        .card {
+            position: relative;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .overlay {
+            position: relative;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .overlay h2 {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -40,13 +60,42 @@
         </div>
     </div>
     <main>
-        <a href="detailPage.html" class="card">
+        <div class="card" onclick="window.location.href='detailPage.html'">
             <div class="overlay">
                 <h2>Getting Started</h2>
-                <a href="#">Explore</a>
+                <a href="detailPage.html">Explore</a>
             </div>
-        </a>
-        <!-- Repeat this structure for each card -->
+        </div>
+        <div class="card" onclick="window.location.href='detailPage.html'">
+            <div class="overlay">
+                <h2>3C</h2>
+                <a href="detailPage.html">Explore</a>
+            </div>
+        </div>
+        <div class="card" onclick="window.location.href='detailPage.html'">
+            <div class="overlay">
+                <h2>Getting Started</h2>
+                <a href="detailPage.html">Explore</a>
+            </div>
+        </div>
+        <div class="card" onclick="window.location.href='detailPage.html'">
+            <div class="overlay">
+                <h2>3C</h2>
+                <a href="detailPage.html">Explore</a>
+            </div>
+        </div>
+        <div class="card" onclick="window.location.href='detailPage.html'">
+            <div class="overlay">
+                <h2>Getting Started</h2>
+                <a href="detailPage.html">Explore</a>
+            </div>
+        </div>
+        <div class="card" onclick="window.location.href='detailPage.html'">
+            <div class="overlay">
+                <h2>3C</h2>
+                <a href="detailPage.html">Explore</a>
+            </div>
+        </div>
     </main>
 </body>
 </html>

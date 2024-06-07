@@ -235,3 +235,104 @@ main {
 .card:nth-child(6) {
     background-image: url('https://via.placeholder.com/300x200?text=Habits');
 }
+
+.content {
+    display: flex;
+    margin: 20px;
+}
+
+.left-column {
+    flex: 2;
+    padding-right: 20px;
+}
+
+.right-column {
+    flex: 3;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.author-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 10px;
+}
+
+.author-details {
+    display: flex;
+    align-items: center;
+}
+
+.author-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.bookmark-icon {
+    width: 24px;
+    height: 24px;
+    background: url('../public/images/bookmark.png') no-repeat center center;
+    background-size: cover;
+    margin-left: 10px;
+}
+
+.followers {
+    color: gray;
+    margin-right: auto;
+}
+
+.follow-button, .bookmark-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #FFA500; /* Orange */
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.follow-button:hover, .bookmark-button:hover {
+    background-color: #FF8C00; /* Dark Orange */
+    transform: translateY(-2px);
+}
+
+.comments-section {
+    margin-top: 20px;
+}
+
+.comment, .reply {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-time {
+    color: gray;
+    margin-left: 10px;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+}
+
+.uploaded-image {
+    width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    margin-top: 20px;
+    border-radius: 5px;
+}
