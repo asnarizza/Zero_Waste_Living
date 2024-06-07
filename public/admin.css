@@ -1,37 +1,40 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-}
-
+/* Header */
 header {
-    width: 100%;
-    background-color: #ffffff;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     position: fixed;
     top: 0;
+    width: 100%;
     z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-    font-size: 1.5em;
+    font-size: 24px;
     font-weight: bold;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
@@ -40,93 +43,151 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #333;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
+nav ul li a:hover {
+    color: #ffcc00;
+}
+
+/* Sidebar */
 aside {
-    width: 250px;
-    background-color: #f8f9fa;
+    background-color: #333;
+    color: #fff;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    width: 250px;
+    height: 100vh;
     position: fixed;
-    top: 70px;
-    bottom: 0;
+    top: 70px; /* Adjust to account for the fixed header */ 
+    left: 0;
     overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .admin-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
     margin-bottom: 20px;
 }
 
 .admin-profile img {
-    border-radius: 50%;
     width: 100px;
     height: 100px;
+    border-radius: 50%;
     margin-bottom: 10px;
+    border: 2px solid #fff;
 }
 
 .admin-profile h3 {
-    font-size: 1.2em;
+    margin: 0;
+    font-size: 18px;
 }
 
-.sidebar nav ul {
-    list-style-type: none;
+.settings h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 5px;
+}
+
+.settings ul {
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.sidebar nav ul li {
-    margin-bottom: 15px;
+.settings ul li {
+    margin-bottom: 5px;
 }
 
-.sidebar nav ul li a {
+.settings ul li a {
+    color: #fff;
     text-decoration: none;
-    color: #333;
+    padding: 5px 10px;
     display: block;
-    padding: 10px 15px;
     border-radius: 4px;
     transition: background-color 0.3s;
 }
 
-.sidebar nav ul li a:hover, .sidebar nav ul li a.active {
-    background-color: #e2e6ea;
+.settings ul li a:hover {
+    background-color: #444;
 }
 
+/* Main Content */
 main {
-    margin-left: 270px;
-    margin-top: 70px;
+    margin-left: 270px; /* Adjust to match the width of the sidebar */
+    margin-top: 70px; /* Adjust to account for the fixed header */
     padding: 20px;
-    width: calc(100% - 270px);
-    overflow-y: auto;
     background-color: #f1f3f5;
+    min-height: calc(100vh - 70px); /* Adjust to account for the fixed header */
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.user-engagement {
+/* Card Styles */
+.card {
     background-color: #fff;
-    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: calc(50% - 20px);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card ul li {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 1em;
+}
+
+.card ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* User Engagement */
+.user-engagement {
+    flex: 1 1 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .user-engagement h2 {
-    margin-bottom: 20px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.5em;
 }
 
-.date-range {
-    background-color: #e9ecef;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
+/* Statistic Section */
 .overview {
     display: flex;
     flex-wrap: wrap;
@@ -141,27 +202,33 @@ main {
     text-align: center;
     flex: 1 1 calc(33.333% - 40px);
     min-width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .statistic h3 {
     margin-bottom: 10px;
     font-size: 1em;
+    color: #333;
 }
 
 .statistic p {
     font-size: 1.5em;
     font-weight: bold;
+    color: #4CAF50;
 }
 
+/* Satisfaction Ratings */
 .satisfaction-ratings {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .satisfaction-ratings h3 {
     margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
 }
 
 .ratings-chart {
@@ -176,7 +243,7 @@ main {
 }
 
 .satisfaction-ratings ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
@@ -185,6 +252,7 @@ main {
     align-items: center;
     margin-bottom: 10px;
     font-size: 1em;
+    color: #555;
 }
 
 .satisfaction-ratings ul li:before {
@@ -192,4 +260,32 @@ main {
     color: #555;
     font-size: 2em;
     margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul li {
+        margin-left: 10px;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    aside {
+        width: 100%;
+        height: auto;
+        position: relative;
+        box-shadow: none;
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card, .user-engagement {
+        min-width: 100%;
+    }
 }
