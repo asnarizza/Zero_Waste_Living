@@ -173,6 +173,7 @@ main {
     color: #fff;
     font-size: 24px;
     transition: transform 0.3s;
+    cursor: pointer;
 }
 
 .card:hover {

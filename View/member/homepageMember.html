@@ -5,33 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inspiration Hub</title>
     <link rel="stylesheet" href="../../public/member.css">
-    <style>
-        .card {
-            position: relative;
-            cursor: pointer;
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .overlay {
-            position: relative;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-
-        .overlay h2 {
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="../../public/post.css">
 </head>
 <body>
     <header>
         <div class="title">Zero Waste Living</div>
         <input type="text" placeholder="Search for all the inspiration you need...">
         <div class="user-controls">
-            <button>Share your idea</button>
+            <button onclick="openModal()">Share your idea</button>
             <div class="profile-icon">A</div>
             <div class="hamburger-icon">
                 <div></div>
@@ -97,5 +78,59 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal for Creating a New Post -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create a new post</h2>
+                <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="left">
+                    <div class="file-upload">
+                        <input type="file" id="fileInput">
+                        <img src="/mnt/data/image.png" alt="Upload Icon" width="50">
+                        <p>Click to choose file or drag and drop.</p>
+                        <p>Your ideas will be private until you publish them.</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="4" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select id="category">
+                            <option value="">Category</option>
+                            <option value="sustainable">Food Waste</option>
+                            <option value="recycling">Resource Conservation</option>
+                            <option value="zero-waste">Plastic and Packaging</option>
+                            <option value="zero-waste">Personal Care</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="create-button">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('createPostModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('createPostModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
