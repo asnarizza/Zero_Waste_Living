@@ -76,9 +76,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle GET requests
 
 } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+    try {
+        $requestData = json_decode(file_get_contents("php://input"), true);
 
-    // Handle PUT requests
+        // Check if the email and new password are set in the PUT request
+        if (isset($requestData['email']) && isset($requestData['newPassword'])) {
+            $email = $requestData['email'];
+            $newPassword = $requestData['newPassword'];
 
+            // Check if the email exists
+            $stmt = $db->prepare("SELECT * FROM user WHERE email=:email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+                $currentPassword = $userData['password'];
+
+                if ($newPassword === $currentPassword) {
+                    http_response_code(400);  // Bad Request
+                    $response->error = "New password cannot be the same as the old password.";
+                } else {
+                    // Update the password
+                    $updateStmt = $db->prepare("UPDATE user SET password=:newPassword WHERE email=:email");
+                    $updateStmt->bindParam(':newPassword', $newPassword);
+                    $updateStmt->bindParam(':email', $email);
+                    $updateStmt->execute();
+
+                    http_response_code(200);  // OK
+                    $response->message = "Password has been updated successfully.";
+                }
+            } else {
+                http_response_code(404);  // Not Found
+                $response->error = "Email does not exist.";
+            }
+        } else {
+            http_response_code(400);  // Bad Request
+            $response->error = "Email and new password are required.";
+        }
+    } catch (Exception $ee) {
+        http_response_code(500);
+        $response->error = "Error occurred " . $ee->getMessage();
+    }
 }
 
 // Before sending the JSON response, set the content type header
