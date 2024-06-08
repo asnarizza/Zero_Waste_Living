@@ -116,8 +116,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
         // Handle GET requests
         try {
-            // Fetch all sharing records from the database
-            $stmt = $db->prepare("SELECT * FROM sharing");
+            // Fetch only the title and image columns from the sharing table
+            $stmt = $db->prepare("SELECT title, image FROM sharing");
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -137,8 +137,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             http_response_code(500);
             $response->error = "Error occurred: " . $e->getMessage();
         }
-
-    }  elseif ($_SERVER["REQUEST_METHOD"] == "PUT") {
+        
+    } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
         // Handle PUT requests
         // Get the ID from the query string
         if (isset($_GET['sharingId'])) {

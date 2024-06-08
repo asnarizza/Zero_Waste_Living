@@ -12,13 +12,13 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     console.log(loginData)
 
     try {
-        const response = await fetch('../api/auth/login.php', {
+        const response = await fetch('http://localhost/Zero_Waste_Living/api/auth/login.php?action=login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(loginData)
-        });
+        });        
 
         const result = await response.json();
         
