@@ -159,58 +159,44 @@ main {
     padding: 20px;
 }
 
-.card {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    height: 200px;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-    font-size: 24px;
-    transition: transform 0.3s;
-    cursor: pointer;
-}
-
 .card:hover {
     transform: scale(1.05);
 }
 
-.card .overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
+#card-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    padding: 20px;
 }
 
-.card h2 {
-    margin: 0;
-    font-size: 28px;
+.card {
+    width: 250px;
+    height: 350px; /* Fixed height for the card */
+    margin: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative;
 }
 
-.card a {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #FFA500; /* Orange */
+.card img {
+    width: 100%;
+    height: 100%; /* Ensures the image fills the card height */
+    object-fit: cover; /* Ensures the image covers the card while maintaining aspect ratio */
+    object-position: center; /* Centers the image within the card */
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.card a:hover {
-    background-color: #FF8C00; /* Dark Orange */
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
 }
 
 .card:nth-child(1) {
@@ -336,4 +322,42 @@ main {
     border: 2px solid #ccc;
     margin-top: 20px;
     border-radius: 5px;
+}
+
+/* CSS for the modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed position */
+    z-index: 1; /* Make sure it stays on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Close button */
+.modal-header span {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-header span:hover,
+.modal-header span:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

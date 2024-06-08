@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../../public/member.css">
     <link rel="stylesheet" href="../../public/post.css">
 </head>
+
 <body>
     <header>
         <div class="title">Zero Waste Living</div>
@@ -40,43 +42,8 @@
             </div>
         </div>
     </div>
-    <main>
-        <div class="card" onclick="window.location.href='detailPage.html'">
-            <div class="overlay">
-                <h2>Getting Started</h2>
-                <a href="detailPage.html">Explore</a>
-            </div>
-        </div>
-        <div class="card" onclick="window.location.href='detailPage.html'">
-            <div class="overlay">
-                <h2>3C</h2>
-                <a href="detailPage.html">Explore</a>
-            </div>
-        </div>
-        <div class="card" onclick="window.location.href='detailPage.html'">
-            <div class="overlay">
-                <h2>Getting Started</h2>
-                <a href="detailPage.html">Explore</a>
-            </div>
-        </div>
-        <div class="card" onclick="window.location.href='detailPage.html'">
-            <div class="overlay">
-                <h2>3C</h2>
-                <a href="detailPage.html">Explore</a>
-            </div>
-        </div>
-        <div class="card" onclick="window.location.href='detailPage.html'">
-            <div class="overlay">
-                <h2>Getting Started</h2>
-                <a href="detailPage.html">Explore</a>
-            </div>
-        </div>
-        <div class="card" onclick="window.location.href='detailPage.html'">
-            <div class="overlay">
-                <h2>3C</h2>
-                <a href="detailPage.html">Explore</a>
-            </div>
-        </div>
+    <main id="card-container">
+        <!-- Cards will be dynamically inserted here -->
     </main>
 
     <!-- Modal for Creating a New Post -->
@@ -89,8 +56,8 @@
             <div class="modal-body">
                 <div class="left">
                     <div class="file-upload">
-                        <input type="file" id="fileInput">
-                        <img src="/mnt/data/image.png" alt="Upload Icon" width="50">
+                        <label for="image"> Image:</label>
+                        <input type="file" id="image" name="image" required>
                         <p>Click to choose file or drag and drop.</p>
                         <p>Your ideas will be private until you publish them.</p>
                     </div>
@@ -118,7 +85,7 @@
             </div>
             <div class="modal-footer">
                 <button class="cancel-button" onclick="closeModal()">Cancel</button>
-                <button class="create-button">Create</button>
+                <button class="create-button" id="createButton">Create</button>
             </div>
         </div>
     </div>
@@ -127,10 +94,13 @@
         function openModal() {
             document.getElementById('createPostModal').style.display = 'flex';
         }
-
+    
         function closeModal() {
             document.getElementById('createPostModal').style.display = 'none';
         }
     </script>
+
+    <script src="../../public/js/sharing.js"></script>
 </body>
+
 </html>
