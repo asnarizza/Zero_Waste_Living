@@ -1,0 +1,329 @@
+/* editProfile.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    margin: 0 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.user-controls {
+    display: flex;
+    align-items: center;
+}
+
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.profile-icon, .hamburger-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.hamburger-icon div {
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+    margin: 3px 0;
+}
+
+.hamburger-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto; /* Ensures the menu does not cause horizontal scrolling */
+    box-sizing: border-box;
+}
+
+.hamburger-menu.show {
+    display: block;
+}
+
+.hamburger-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.hamburger-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.profile-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-icon img {
+    width: 100px;
+    height: 100px;
+}
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    background-color: #81cd71;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-group label:hover {
+    background-color: #1a242f;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.form-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #fff url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='292.362' height='292.362'%3E%3Cpath d='M287.81 69.397L166.747 190.46a21.335 21.335 0 0 1-30.182 0L4.553 69.397a15.435 15.435 0 0 1 0-21.857l10.92-10.92a15.435 15.435 0 0 1 21.857 0L146.18 121.17a5.153 5.153 0 0 0 7.305 0L253.532 36.62a15.435 15.435 0 0 1 21.857 0l10.92 10.92c6.025 6.025 6.025 15.832 0 21.857z'/%3E%3C/svg%3E") no-repeat right 10px top 50%;
+    background-size: 12px;
+}
+
+.form-group i {
+    margin-right: 10px;
+}
+
+.save-button {
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: #1a242f;
+}
+
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-wrapper input {
+    flex-grow: 1;
+}
+
+.toggle-password {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #2c3e50;
+}
+
+.toggle-password:hover {
+    color: #1a242f;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.modal-body {
+    display: flex;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.file-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.right {
+    flex: 2;
+    margin-left: 20px;
+    box-sizing: border-box;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.cancel-button, .create-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.cancel-button {
+    background-color: #ccc;
+    color: #000;
+    margin-right: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #bbb;
+}
+
+.create-button {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.create-button:hover {
+    background-color: #45a049;
+}

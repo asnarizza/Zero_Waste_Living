@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="../../public/editProfile.css">
+    <link rel="stylesheet" href="../../public/profile.css">
+    <link rel="stylesheet" href="../../public/member.css">
+    <link rel="stylesheet" href="../../public/post.css">
+</head>
+<body>
+    <header>
+        <div class="title">Zero Waste Living</div>
+        <input type="text" placeholder="Search for all the inspiration you need...">
+        <div class="user-controls">
+            <button onclick="openModal()">Share your idea</button>
+            <div class="profile-icon">A</div>
+            <div class="hamburger-icon" onclick="toggleHamburgerMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div id="hamburgerMenu" class="hamburger-menu">
+                <a href="homepageMember.html">Home</a>
+                <a href="wishlist.html">Wishlist</a>
+                <a href="profileMember.html">Profile</a>
+                <a href="../Login.html">Log out</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <div class="profile-icon-wrapper">
+            <div class="profile-icon">
+                <img src="../../public/images/edit_icon.png" alt="Edit Profile Icon">
+            </div>
+        </div>
+        <form class="edit-profile-form">
+            <div class="form-group">
+                <label for="name"><i class="fas fa-user"></i> Name</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user-tag"></i> Username</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password">
+                    <span class="toggle-password" onclick="togglePasswordVisibility('password')"><i class="fas fa-eye"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dob"><i class="fas fa-calendar-alt"></i> Date of Birth</label>
+                <input type="date" id="dob" name="dob">
+            </div>
+            <button type="submit" class="save-button" onclick="window.location.href = 'profileMember.html';">Save</button>
+        </form>
+    </div>
+
+    <!-- Modal for Creating a New Post -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create a new post</h2>
+                <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="left">
+                    <div class="file-upload">
+                        <input type="file" id="fileInput">
+                        <img src="/mnt/data/image.png" alt="Upload Icon" width="50">
+                        <p>Click to choose file or drag and drop.</p>
+                        <p>Your ideas will be private until you publish them.</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="4" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select id="category">
+                            <option value="">Category</option>
+                            <option value="sustainable">Food Waste</option>
+                            <option value="recycling">Resource Conservation</option>
+                            <option value="zero-waste">Plastic and Packaging</option>
+                            <option value="zero-waste">Personal Care</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="create-button">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        function openModal() {
+            document.getElementById('createPostModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('createPostModal').style.display = 'none';
+        }
+
+        function toggleHamburgerMenu() {
+            const menu = document.getElementById('hamburgerMenu');
+            menu.classList.toggle('show');
+        }
+
+        function togglePasswordVisibility(passwordFieldId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const toggleIcon = passwordField.nextElementSibling.querySelector('i');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>

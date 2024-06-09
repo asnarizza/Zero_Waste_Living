@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspiration Hub</title>
+    <link rel="stylesheet" href="../../public/member.css">
+    <link rel="stylesheet" href="../../public/post.css">
+    <link rel="stylesheet" href="../../public/wishlist.css">
+</head>
+<body>
+    <header>
+        <div class="title">Zero Waste Living</div>
+        <input type="text" placeholder="Search for all the inspiration you need...">
+        <div class="user-controls">
+            <button onclick="openModal()">Share your idea</button>
+            <div class="profile-icon">A</div>
+            <div class="hamburger-icon" onclick="toggleHamburgerMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div id="hamburgerMenu" class="hamburger-menu">
+                <a href="homepageMember.html">Home</a>
+                <a href="wishlist.html">Wishlist</a>
+                <a href="profileMember.html">Profile</a>
+                <a href="../Login.html">Log out</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Wishlist Section -->
+    <div class="wishlist-container">
+        <h2>Your Wishlist</h2>
+        <ul class="wishlist">
+            <li class="wishlist-item">
+                    <span>Compostable Cutlery Set</span>
+                </a>
+                <button class="remove-button" onclick="removeItem(this)">Remove</button>
+            </li>
+            <li class="wishlist-item">
+                    <span>Reusable Bamboo Towe
+                        ls</span>
+                </a>
+                <button class="remove-button" onclick="removeItem(this)">Remove</button>
+            </li>
+            <li class="wishlist-item">
+                    <span>Biodegradable Garbage Bags</span>
+                </a>
+                <button class="remove-button" onclick="removeItem(this)">Remove</button>
+            </li>
+            <!-- Additional wishlist items can be added here -->
+        </ul>
+    </div>
+
+    <!-- Modal for Creating a New Post -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create a new post</h2>
+                <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="left">
+                    <div class="file-upload">
+                        <input type="file" id="fileInput">
+                        <img src="/mnt/data/image.png" alt="Upload Icon" width="50">
+                        <p>Click to choose file or drag and drop.</p>
+                        <p>Your ideas will be private until you publish them.</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="4" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select id="category">
+                            <option value="">Category</option>
+                            <option value="food-waste">Food Waste</option>
+                            <option value="resource-conservation">Resource Conservation</option>
+                            <option value="plastic-packaging">Plastic and Packaging</option>
+                            <option value="personal-care">Personal Care</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="create-button">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('createPostModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('createPostModal').style.display = 'none';
+        }
+
+        function toggleHamburgerMenu() {
+            var menu = document.getElementById('hamburgerMenu');
+            if (menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            } else {
+                menu.classList.add('show');
+            }
+        }
+
+        function removeItem(button) {
+            // Remove the wishlist item
+            var item = button.parentElement;
+            item.remove();
+        }
+    </script>
+</body>
+</html>
