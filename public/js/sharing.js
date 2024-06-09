@@ -41,6 +41,20 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error fetching data:', error));
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener for form submission
+    const createButton = document.getElementById('createButton');
+    console.log('Create button:', createButton); // Debugging statement
+    if (createButton) {
+        createButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            console.log('Create button clicked'); // Debugging statement
+            submitForm();
+        });
+    } else {
+        console.error('Create button not found');
+    }
+});
 
 // Function to handle form submission
 function submitForm() {
@@ -48,22 +62,21 @@ function submitForm() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const category = document.getElementById('category').value;
-    
-    // Retrieve userId from query parameters in the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('userId');
-    console.log(requestData);
-    
+
+    // Retrieve userId from localStorage
+    const userId = localStorage.getItem('userId');
+    console.log(userId);
+
     // Get the main image file input element
     const imageInput = document.getElementById('image');
-    
+
     // Check if a file is selected
     if (imageInput.files.length > 0) {
         const file = imageInput.files[0];
-        
+
         // Create a FileReader to read the selected file
         const reader = new FileReader();
-        
+
         // Define what to do when the file has been loaded
         reader.onload = function(e) {
             // Get the base64-encoded image data
@@ -77,9 +90,9 @@ function submitForm() {
                 userId: userId,
                 categoryId: category
             };
-    
-            console.log(requestData);
-    
+
+            console.log('Request Data:', requestData); // Log requestData for debugging
+
             // Send data to server
             fetch('http://localhost/Zero_Waste_Living/api/sharing.php', {
                 method: 'POST',
@@ -89,9 +102,9 @@ function submitForm() {
                 body: JSON.stringify(requestData)
             })
             .then(response => {
-                console.log(response); // Log the response for debugging
+                console.log('Response:', response); // Log the response for debugging
                 if (response.ok) {
-                    console.log("berjaya");
+                    console.log("Submission successful");
                     window.location.href = '../member/homepageMember.html';
                 } else {
                     console.error('Failed to submit form');
@@ -103,7 +116,7 @@ function submitForm() {
                 // You can add further error handling here, like showing an error message to the user
             });
         };
-        
+
         // Read the selected file as a data URL
         reader.readAsDataURL(file);
     } else {
@@ -112,14 +125,6 @@ function submitForm() {
     }
 }
 
-// Event listener for form submission
-document.addEventListener('DOMContentLoaded', function() {
-    const createButton = document.querySelector('.create-button');
-    createButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        submitForm();
-    });
-});
 
 function openModal() {
     document.getElementById('createPostModal').style.display = 'flex';

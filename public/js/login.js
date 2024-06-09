@@ -1,55 +1,60 @@
+const loginForm = document.getElementById("loginForm");
 
-document.getElementById('loginForm').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Prevent the default form submission
+loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-    const loginData = {
+    console.log("Email: ", email);
+    console.log("Password: ", password);
+
+    const data = {
+        action: "login", // Make sure to include the action
         email: email,
-        password: password
+        password: password,
     };
-    console.log(loginData)
+
+    console.log("Data: ", data);
 
     try {
-        const response = await fetch('http://localhost/Zero_Waste_Living/api/auth/login.php?action=login', {
+        const response = await fetch('http://localhost/Zero_Waste_Living/api/auth/login.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(loginData)
-        });        
+            body: JSON.stringify(data)
+        });
 
         const result = await response.json();
-        
-
 
         if (response.ok) {
-            console.log("test ok")
-            sessionStorage.setItem('userData', JSON.stringify(result));
-
-            console.log(sessionStorage.getItem('userData'))
-            // Login successful, handle the response
-            //document.getElementById('message').innerText = 'Login successful!';
-            console.log(result.roleId);
-            // Redirect to another page or perform any other desired actions
-
-            // Check if cafe_id and matric_no are not null
-            if (result.roleId == 1) {
-                // Redirect to cafeOwnerDashboard
-                console.log("ok")
-                window.location.href = "../View/admin/dashboard.html";
-            } else {
-                // Redirect to studentDashboard
-                window.location.href = "dashboard.html";
+            // Save user data to local storage
+            localStorage.setItem("userId", result.userId);
+            localStorage.setItem("roleId", result.roleId);
+            localStorage.setItem("name", result.name);
+            localStorage.setItem("email", result.email);
+            localStorage.setItem("gender", result.gender);
+            localStorage.setItem("birthDate", result.birthDate);
+            if (result.image) {
+                localStorage.setItem("image", result.image);
             }
 
+            console.log("User data saved to local storage:", result); // Add print statement to check
+
+            alert("Login successful!");
+
+            // Redirect based on user role
+            if (result.roleId == 1) {
+                window.location.href = "../View/admin/dashboard.html";
+            } else {
+                window.location.href = "member/homepageMember.html";
+            }
         } else {
-            // Login failed, display the error message
-            //document.getElementById('message').innerText = result.error || 'Login failed!';
+            alert(result.error || "An error occurred. Please try again.");
         }
     } catch (error) {
         console.error('Error:', error);
-        //document.getElementById('message').innerText = 'An error occurred while logging in.';
+        document.getElementById('message').innerText = "An error occurred. Please try again.";
     }
 });
