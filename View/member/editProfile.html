@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="../../public/editProfile.css">
-    <link rel="stylesheet" href="../../public/profile.css">
-    <link rel="stylesheet" href="../../public/member.css">
-    <link rel="stylesheet" href="../../public/post.css">
+    <link rel="stylesheet" href="../assets/css/editProfile.css">
+    <link rel="stylesheet" href="../assets/css/profile.css">
+    <link rel="stylesheet" href="../assets/css/member.css">
+    <link rel="stylesheet" href="../assets/css/post.css">
 </head>
 <body>
     <header>
@@ -22,10 +22,10 @@
                 <div></div>
             </div>
             <div id="hamburgerMenu" class="hamburger-menu">
-                <a href="homepageMember.html">Home</a>
-                <a href="wishlist.html">Wishlist</a>
-                <a href="profileMember.html">Profile</a>
-                <a href="../Login.html">Log out</a>
+                <a href="../member/homepageMember.html">Home</a>
+                <a href="../member/wishlist.html">Wishlist</a>
+                <a href="../member/profileMember.html">Profile</a>
+                <a href="../login.html">Log out</a>
             </div>
         </div>
     </header>
@@ -34,7 +34,7 @@
         <h1>Edit Profile</h1>
         <div class="profile-icon-wrapper">
             <div class="profile-icon">
-                <img src="../../public/images/edit_icon.png" alt="Edit Profile Icon">
+                <img src="../assets/images/edit_icon.png" alt="Edit Profile Icon">
             </div>
         </div>
         <form class="edit-profile-form">
@@ -68,7 +68,7 @@
                 <label for="dob"><i class="fas fa-calendar-alt"></i> Date of Birth</label>
                 <input type="date" id="dob" name="dob">
             </div>
-            <button type="submit" class="save-button" onclick="window.location.href = 'profileMember.html';">Save</button>
+            <button type="submit" class="save-button" onclick="window.location.href = '../View/member/profileMember.html';">Save</button>
         </form>
     </div>
 

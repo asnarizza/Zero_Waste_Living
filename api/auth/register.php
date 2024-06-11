@@ -1,11 +1,5 @@
 <?php
-
-$hostname = "localhost";
-$database = "zwaste";
-$username = "root";
-$password = "";
-
-$db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
+require '../connection.php';
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");

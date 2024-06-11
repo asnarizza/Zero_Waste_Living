@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inspiration Hub - Detail</title>
-    <link rel="stylesheet" href="../../public/member.css">
-    <link rel="stylesheet" href="../../public/post.css">
+    <link rel="stylesheet" href="../../assets/css/member.css">
+    <link rel="stylesheet" href="../../assets/css/post.css">
 </head>
 <body>
     <header>
@@ -14,10 +14,16 @@
         <div class="user-controls">
             <button onclick="openModal()">Share your idea</button>
             <div class="profile-icon">A</div>
-            <div class="hamburger-icon">
+            <div class="hamburger-icon" onclick="toggleHamburgerMenu()">
                 <div></div>
                 <div></div>
                 <div></div>
+            </div>
+            <div id="hamburgerMenu" class="hamburger-menu">
+                <a href="../member/homepageMember.html">Home</a>
+                <a href="../member/wishlist.html">Wishlist</a>
+                <a href="../member/profileMember.html">Profile</a>
+                <a href="../login.html">Log out</a>
             </div>
         </div>
     </header>
@@ -80,6 +86,10 @@
 </div>
 
 <script>
+    function toggleHamburgerMenu() {
+            const menu = document.getElementById('hamburgerMenu');
+            menu.classList.toggle('show');
+        }
     function openModal() {
         document.getElementById('createPostModal').style.display = 'flex';
     }
@@ -88,6 +98,6 @@
         document.getElementById('createPostModal').style.display = 'none';
     }
 </script>
-    <script src="../../public/js/detailSharing.js"></script>
+    <script src="../../assets/js/detailSharing.js"></script>
 </body>
 </html>

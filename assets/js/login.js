@@ -18,7 +18,7 @@ loginForm.addEventListener("submit", async (event) => {
     console.log("Data: ", data);
 
     try {
-        const response = await fetch('http://localhost/Zero_Waste_Living/api/auth/login.php', {
+        const response = await fetch('../api/auth/login.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ loginForm.addEventListener("submit", async (event) => {
             if (result.roleId == 1) {
                 window.location.href = "../View/admin/dashboard.html";
             } else {
-                window.location.href = "member/homepageMember.html";
+                window.location.href = "../View/member/homepageMember.html";
             }
         } else {
             alert(result.error || "An error occurred. Please try again.");

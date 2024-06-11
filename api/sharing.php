@@ -1,18 +1,5 @@
 <?php
-
-$hostname = "localhost";
-$database = "zwaste";
-$username = "root";
-$password = "";
-
-try {
-    $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]);
-    exit();
-}
+require 'connection.php';
 
 // initial response code
 // response code will be changed if the request goes into any of the processes

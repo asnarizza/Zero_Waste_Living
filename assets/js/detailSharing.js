@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userId = params.get('userId');
 
     if (sharingId) {
-        fetch(`http://localhost/Zero_Waste_Living/api/sharing.php?action=listById&sharingId=${sharingId}`)
+        fetch(`../../api/sharing.php?action=listById&sharingId=${sharingId}`)
             .then(response => response.json())
             .then(data => {
                 if (data && data.data) {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('main-image').src = 'data:image/jpeg;base64,' + post.image;
 
                     // Fetch comments
-                    fetch(`http://localhost/Zero_Waste_Living/api/comment.php?sharingId=${sharingId}`)
+                    fetch(`../../api/comment.php?sharingId=${sharingId}`)
                         .then(response => response.json())
                         .then(commentData => {
                             if (commentData && commentData.data) {
@@ -99,7 +99,7 @@ function submitForm() {
             console.log(requestData);
     
             // Send data to server
-            fetch('http://localhost/Zero_Waste_Living/api/sharing.php', {
+            fetch('../../api/sharing.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ function submitForm() {
                 console.log(response); // Log the response for debugging
                 if (response.ok) {
                     console.log("berjaya");
-                    window.location.href = '../member/homepageMember.html';
+                    window.location.href = '../../View/member/homepageMember.html';
                 } else {
                     console.error('Failed to submit form');
                 }

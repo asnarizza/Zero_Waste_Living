@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Assuming you're fetching all data initially
-    fetch('http://localhost/Zero_Waste_Living/api/sharing.php?action=listAll')
+    fetch('../../api/sharing.php?action=listAll')
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -94,7 +94,7 @@ function submitForm() {
             console.log('Request Data:', requestData); // Log requestData for debugging
 
             // Send data to server
-            fetch('http://localhost/Zero_Waste_Living/api/sharing.php', {
+            fetch('../../api/sharing.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ function submitForm() {
                 console.log('Response:', response); // Log the response for debugging
                 if (response.ok) {
                     console.log("Submission successful");
-                    window.location.href = '../member/homepageMember.html';
+                    window.location.href = '../../View/member/homepageMember.html';
                 } else {
                     console.error('Failed to submit form');
                 }

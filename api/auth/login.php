@@ -1,11 +1,5 @@
 <?php
-
-$hostname = "localhost";
-$database = "zwaste";
-$username = "root";
-$password = "";
-
-$db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
+require '../connection.php';
 
 // initial response code
 // response code will be changed if the request goes into any of the processes

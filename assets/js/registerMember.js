@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
                 console.log(registrationData)
                 try {
-                    const response = await fetch("http://localhost/Zero_Waste_Living/api/auth/register.php?action=registerMember", {
+                    const response = await fetch("../../api/auth/register.php?action=registerMember", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

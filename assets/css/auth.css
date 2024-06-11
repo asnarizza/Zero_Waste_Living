@@ -10,7 +10,7 @@ body {
 
 .background-image {
     flex: 1;
-    background: url('../public/images/background.jpg') no-repeat center center;
+    background: url('../images/background.jpg') no-repeat center center;
     background-size: cover;
 }
 

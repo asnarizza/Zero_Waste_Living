@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(registrationData)
 
         try {
-            const response = await fetch("http://localhost/Zero_Waste_Living/api/auth/register.php?action=registerAdmin", {
+            const response = await fetch("../api/auth/register.php?action=registerAdmin", {
                 // Change this URL to your actual endpoint
                 method: 'POST',
                 headers: {
