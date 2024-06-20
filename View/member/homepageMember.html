@@ -15,7 +15,8 @@
         <input type="text" placeholder="Search for all the inspiration you need...">
         <div class="user-controls">
             <button onclick="openModal()">Share your idea</button>
-            <div class="profile-icon">A</div>
+            <div class="profile-icon" id="profileIcon">A</div>
+
             <div class="hamburger-icon" onclick="toggleHamburgerMenu()">
                 <div></div>
                 <div></div>
@@ -23,31 +24,11 @@
             </div>
             <div id="hamburgerMenu" class="hamburger-menu">
                 <a href="../member/homepageMember.html">Home</a>
-                <a href="../member/wishlist.html">Wishlist</a>
                 <a href="../member/profileMember.html">Profile</a>
                 <a href="../login.html">Log out</a>
             </div>
         </div>
     </header>
-    <div class="filters">
-        <div class="filter-buttons">
-            <button class="filter-btn active">All</button>
-            <button class="filter-btn">Recycle</button>
-            <button class="filter-btn">Living</button>
-            <button class="filter-btn">Eco-friendly</button>
-            <button class="filter-btn">Compost</button>
-            <button class="filter-btn">Habits</button>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Filter</button>
-            <div class="dropdown-content">
-                <a href="#">All</a>
-                <a href="#">Sustainable Living</a>
-                <a href="#">Zero Waste Guide</a>
-                <a href="#">DIY</a>
-            </div>
-        </div>
-    </div>
     <main id="card-container">
         <!-- Cards will be dynamically inserted here -->
     </main>

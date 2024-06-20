@@ -109,3 +109,10 @@ body {
     background-color: #ccc;
     color: #000;
 }
+
+.avatar-image {
+    width: 100%; /* Make the image fill the entire space of the profile avatar */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Make the image circular */
+}
+

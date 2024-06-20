@@ -11,10 +11,14 @@
 <body>
     <header>
         <div class="title">Zero Waste Living</div>
-        <input type="text" placeholder="Search for all the inspiration you need...">
+        <input type="text" id="searchInput" placeholder="Search for all the inspiration you need...">
         <div class="user-controls">
-            <button onclick="openModal()">Share your idea</button>
-            <div class="profile-icon">A</div>
+            <div class="profile-icon">
+                <div class="profileImage">
+                    <img id="profileIconImage" alt="Profile Picture">
+                </div>
+            </div>
+            
             <div class="hamburger-icon" onclick="toggleHamburgerMenu()">
                 <div></div>
                 <div></div>
@@ -22,7 +26,6 @@
             </div>
             <div id="hamburgerMenu" class="hamburger-menu">
                 <a href="../member/homepageMember.html">Home</a>
-                <a href="../member/wishlist.html">Wishlist</a>
                 <a href="../member/profileMember.html">Profile</a>
                 <a href="../login.html">Log out</a>
             </div>
@@ -31,37 +34,22 @@
     <main>
         <div class="profile">
             <div class="profile-header">
-                <div class="profile-picture">
-                    <div class="profile-initials">L</div>
+                <div class="profile-image">
+                    <img id="profileHeaderImage" alt="Profile Picture">
                 </div>
                 <div class="profile-info">
-                    <h2>Lily</h2>
-                    <p>@lilythedandelions</p>
-                    <a href="../../member/editProfile.html">
-                        <button>Edit profile</button>
-                    </a>
+                    <h2 id="name"></h2>
+                    <p id="email"></p>
+                    <a href="../member/editProfile.html" class="edit-profile-button">Edit profile</a>
                 </div>
             </div>
         </div>
+        
+        </div>
         <div class="posts">
-            <h3>Post (4)</h3>
-            <div class="post-grid">
-                <a href="editPost.html" class="post-item">
-                    <img src="../../assets/images/recycle_guide.jpg" alt="Recycle Guide">
-                    <p>How to recycle efficiently: A Complete Beginners’ Guide</p>
-                </a>
-                <a href="postDetails.html" class="post-item">
-                    <img src="../../assets/images/zero_waste.jpg" alt="Zero Waste">
-                    <p>5 Guide for Zero Waste Living</p>
-                </a>
-                <a href="postDetails.html" class="post-item">
-                    <img src="../../assets/images/compost.jpg" alt="Compost">
-                    <p>Composting at Home: Tips and Tricks</p>
-                </a>
-                <a href="postDetails.html" class="post-item">
-                    <img src="../../assets/images/sustainable_living.jpg" alt="Sustainable Living">
-                    <p>Sustainable Living: Small Changes for Big Impact</p>
-                </a>
+            <h3>Your Sharings</h3>
+            <div class="post-grid" id="postGrid">
+                <!-- Placeholder for dynamically fetched sharings -->
             </div>
         </div>
     </main>
@@ -70,57 +58,7 @@
             const menu = document.getElementById('hamburgerMenu');
             menu.classList.toggle('show');
         }
-
-        function openModal() {
-            document.getElementById('createPostModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('createPostModal').style.display = 'none';
-        }
     </script>
-    <!-- Modal for Creating a New Post -->
-    <div id="createPostModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Create a new post</h2>
-                <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="left">
-                    <div class="file-upload">
-                        <input type="file" id="fileInput">
-                        <img src="/mnt/data/image.png" alt="Upload Icon" width="50">
-                        <p>Click to choose file or drag and drop.</p>
-                        <p>Your ideas will be private until you publish them.</p>
-                    </div>
-                </div>
-                <div class="right">
-                    <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" placeholder="Title">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea id="description" rows="4" placeholder="Description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <select id="category">
-                            <option value="">Category</option>
-                            <option value="sustainable">Food Waste</option>
-                            <option value="recycling">Resource Conservation</option>
-                            <option value="zero-waste">Plastic and Packaging</option>
-                            <option value="zero-waste">Personal Care</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="cancel-button" onclick="closeModal()">Cancel</button>
-                <button class="create-button">Create</button>
-            </div>
-        </div>
-    </div>
+    <script src="../../assets/js/profile.js"></script>
 </body>
 </html>

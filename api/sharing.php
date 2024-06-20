@@ -83,72 +83,122 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $response->error = "Error occurred: " . $e->getMessage();
                 }
                 break;
-            case 'listById':
-                if (isset($_GET['sharingId'])) {
-                    $sharingId = $_GET['sharingId'];
-                    try {
-                        // Fetch data by ID
-                        $stmt = $db->prepare("SELECT title, titleDescription, image, userId FROM sharing WHERE sharingId = :sharingId");
-                        $stmt->bindParam(':sharingId', $sharingId);
-                        $stmt->execute();
-                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                        // Check if record is found
-                        if ($result) {
-                            // Set response code to OK
-                            http_response_code(200);
-                            // Set response data
-                            $response->data = $result;
-                        } else {
-                            // No record found
-                            http_response_code(404);
-                            $response->error = "Record not found.";
+                case 'listById':
+                    if (isset($_GET['sharingId'])) {
+                        $sharingId = $_GET['sharingId'];
+                        try {
+                            // Fetch data by ID
+                            $stmt = $db->prepare("SELECT s.title, s.titleDescription, s.image, s.userId, c.categoryName 
+                                                  FROM sharing s 
+                                                  INNER JOIN category c ON s.categoryId = c.categoryId
+                                                  WHERE s.sharingId = :sharingId");
+                            $stmt->bindParam(':sharingId', $sharingId);
+                            $stmt->execute();
+                            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                            // Check if record is found
+                            if ($result) {
+                                // Set response code to OK
+                                http_response_code(200);
+                                // Set response data
+                                $response->data = $result;
+                            } else {
+                                // No record found
+                                http_response_code(404);
+                                $response->error = "Record not found.";
+                            }
+                        } catch (Exception $e) {
+                            // Error occurred while fetching record
+                            http_response_code(500);
+                            $response->error = "Error occurred: " . $e->getMessage();
                         }
-                    } catch (Exception $e) {
-                        // Error occurred while fetching record
-                        http_response_code(500);
-                        $response->error = "Error occurred: " . $e->getMessage();
+                    } else {
+                        http_response_code(400); // Bad Request
+                        $response->error = "ID parameter is required for listById action.";
                     }
-                } else {
+                    break;
+                
+
+                case 'listByUserId':
+                    if (isset($_GET['userId'])) {
+                        $userId = $_GET['userId'];
+                        try {
+                            // Fetch data by userId
+                            $stmt = $db->prepare("SELECT sharingId, title, titleDescription, image FROM sharing WHERE userId = :userId");
+                            $stmt->bindParam(':userId', $userId);
+                            $stmt->execute();
+                            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+                            // Check if records are found
+                            if ($results) {
+                                // Set response code to OK
+                                http_response_code(200);
+                                // Set response data
+                                $response->data = $results;
+                            } else {
+                                // No records found
+                                http_response_code(404);
+                                $response->error = "No records found for the given userId.";
+                            }
+                        } catch (Exception $e) {
+                            // Error occurred while fetching records
+                            http_response_code(500);
+                            $response->error = "Error occurred: " . $e->getMessage();
+                        }
+                    } else {
+                        http_response_code(400); // Bad Request
+                        $response->error = "userId parameter is required for listByUserId action.";
+                    }
+                    break;
+        
+                default:
                     http_response_code(400); // Bad Request
-                    $response->error = "ID parameter is required for listById action.";
-                }
-                break;
-            default:
-                http_response_code(400); // Bad Request
-                $response->error = "Invalid action.";
-                break;
-        }
+                    $response->error = "Invalid action.";
+                    break;
+            }
     } else {
         http_response_code(400); // Bad Request
         $response->error = "Action parameter is required.";
     }
+
 } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-        // Handle PUT requests
-        // Get the ID from the query string
-        if (isset($_GET['sharingId'])) {
-            $sharingId = $_GET['sharingId'];
-    
-            // Get the request body
-            $requestData = json_decode(file_get_contents("php://input"), true);
-    
-            if ($sharingId) {
-                try {
-                    // Prepare the SQL statement for updating record
-                    $titleDescription = isset($requestData['titleDescription']) ? $requestData['titleDescription'] : null;
-                    $image = isset($requestData['image']) ? $requestData['image'] : null; // Added for image
-        
+    // Handle PUT requests
+    // Get the ID from the query string
+    if (isset($_GET['sharingId'])) {
+        $sharingId = $_GET['sharingId'];
+
+        // Get the request body
+        $requestData = json_decode(file_get_contents("php://input"), true);
+
+        if ($sharingId && isset($requestData['categoryId'])) {
+            try {
+                // Prepare the data
+                $title = isset($requestData['title']) ? $requestData['title'] : null;
+                $titleDescription = isset($requestData['titleDescription']) ? $requestData['titleDescription'] : null;
+                $image = isset($requestData['image']) ? $requestData['image'] : null;
+                $categoryId = $requestData['categoryId'];
+
+                // Verify that the categoryId exists in the category table
+                $stmt = $db->prepare("SELECT COUNT(*) FROM category WHERE categoryId = :categoryId");
+                $stmt->bindParam(':categoryId', $categoryId);
+                $stmt->execute();
+                $categoryExists = $stmt->fetchColumn();
+
+                if ($categoryExists) {
                     // Prepare the SQL statement for updating the record
-                    $stmt = $db->prepare("UPDATE sharing SET titleDescription = :titleDescription, image = :image WHERE sharingId = :sharingId");
-        
-                    // Bind parameters  
+                    $stmt = $db->prepare("UPDATE sharing SET title = :title, titleDescription = :titleDescription, image = :image, categoryId = :categoryId WHERE sharingId = :sharingId");
+
+                    // Bind parameters
+                    $stmt->bindParam(':title', $title);
                     $stmt->bindParam(':titleDescription', $titleDescription);
-                    $stmt->bindParam(':image', $image); // Bind image
-                    $stmt->bindParam(':sharingId', $sharingId); // Bind the sharingId from the URL
-        
+                    $stmt->bindParam(':image', $image);
+                    $stmt->bindParam(':categoryId', $categoryId);
+                    $stmt->bindParam(':sharingId', $sharingId);
+
                     // Execute the statement
                     $stmt->execute();
-        
+
                     // Check if the update was successful
                     if ($stmt->rowCount() > 0) {
                         // Update successful
@@ -159,22 +209,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } else {
                         // Update failed
                         http_response_code(500); // Internal Server Error
-                        $response->error = "Failed to update.";
+                        $response = [
+                            'error' => "Failed to update."
+                        ];
                     }
-                } catch (Exception $ee) {
-                    http_response_code(500);
-                    $response->error = "Error occurred: " . $ee->getMessage();
+                } else {
+                    http_response_code(400); // Bad Request
+                    $response = [
+                        'error' => "Invalid categoryId. It does not exist."
+                    ];
                 }
-            } else {
-                http_response_code(400);  // Bad Request
-                $response->error = "sharingId parameter is required for update.";
+            } catch (Exception $ee) {
+                http_response_code(500); // Internal Server Error
+                $response = [
+                    'error' => "Error occurred: " . $ee->getMessage()
+                ];
             }
         } else {
-            http_response_code(400);  // Bad Request
-            $response->error = "sharingId parameter is required in the URL.";
+            http_response_code(400); // Bad Request
+            $response = [
+                'error' => "sharingId and categoryId parameters are required for update."
+            ];
         }
-    } else
-    
+    } else {
+        http_response_code(400); // Bad Request
+        $response = [
+            'error' => "sharingId parameter is required in the URL."
+        ];
+    }
+} 
 // Before sending the JSON response, set the content type header
 header('Content-Type: application/json');
 
@@ -182,3 +245,4 @@ header('Content-Type: application/json');
 echo json_encode($response);
 exit();
 ?>
+

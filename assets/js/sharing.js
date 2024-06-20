@@ -125,6 +125,47 @@ function submitForm() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve userId from localStorage
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+        // Fetch user profile data using userId
+        fetch(`../../api/auth/profile.php?userId=${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse response as JSON
+            })
+            .then(userData => {
+                if (userData && userData.image) {
+                    console.log('Parsed user data:', userData);
+
+                    // Update profile image for profile-icon
+                    const profileIcon = document.getElementById('profileIcon');
+                    profileIcon.textContent = ''; // Clear existing content ('A')
+
+                    const profileImage = document.createElement('img');
+                    profileImage.src = 'data:image/jpeg;base64,' + userData.image;
+                    profileImage.alt = 'Profile Image'; // Add alt text for accessibility
+                    profileImage.classList.add('avatar-image'); // Optionally add a class for styling
+
+                    profileIcon.appendChild(profileImage); // Append the image to profileIcon div
+                } else {
+                    console.log('User data or profile image not found.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user profile data:', error);
+            });
+    } else {
+        console.log('userId not found in local storage.');
+    }
+});
+
+
+
 
 function openModal() {
     document.getElementById('createPostModal').style.display = 'flex';
