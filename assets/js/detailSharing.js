@@ -1,3 +1,91 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const sharingId = params.get('sharingId');
+    const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
+
+    if (sharingId) {
+        // Fetch the post details
+        fetch(`../../api/sharing.php?action=listById&sharingId=${sharingId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.data) {
+                    const post = data.data;
+                    document.getElementById('post-title').textContent = post.title;
+                    document.getElementById('post-description').textContent = post.titleDescription;
+                    document.getElementById('main-image').src = 'data:image/jpeg;base64,' + post.image;
+
+                    // Fetch comments
+                    fetch(`../../api/comment.php?sharingId=${sharingId}`)
+                        .then(response => response.json())
+                        .then(commentData => {
+                            if (commentData && commentData.data) {
+                                const commentsSection = document.querySelector('.comments-section');
+                                commentsSection.innerHTML = '<h2>Comments</h2>'; // Clear existing comments
+                                commentData.data.forEach(comment => {
+                                    // Create a div element for each comment
+                                    const commentDiv = document.createElement('div');
+                                    commentDiv.className = 'comment';
+                                
+                                    // Create a span for the comment author's name
+                                    const commentAuthor = document.createElement('span');
+                                    commentAuthor.className = 'comment-author';
+                                    commentAuthor.textContent = comment.name;
+                                
+                                    // Create a paragraph for the comment text
+                                    const commentText = document.createElement('p');
+                                    commentText.textContent = comment.comment;
+                                
+                                    // Append author name and comment text to the comment div
+                                    commentDiv.appendChild(commentAuthor);
+                                    commentDiv.appendChild(commentText);
+                                
+                                    // Check if the comment belongs to the logged-in user
+                                    if (String(comment.userId) === String(userId)) {
+                                        // Create edit button
+                                        const editButton = document.createElement('button');
+                                        editButton.textContent = 'Edit';
+                                        editButton.addEventListener('click', () => {
+                                            // Populate comment in the comment input for editing
+                                            document.getElementById('commentInput').value = comment.comment;
+                                            // Update commentId data attribute on form for future reference
+                                            document.getElementById('commentForm').setAttribute('data-comment-id', comment.commentId);
+                                            // Change submit button to update mode
+                                            const submitButton = document.querySelector('.comment-form button[type="submit"]');
+                                            submitButton.textContent = 'Update Comment';
+                                            submitButton.removeEventListener('click', submitNewComment);
+                                            submitButton.addEventListener('click', updateComment);
+                                        });
+                                        commentDiv.appendChild(editButton);
+                                
+                                        // Create delete button
+                                        const deleteButton = document.createElement('button');
+                                        deleteButton.textContent = 'Delete';
+                                        deleteButton.addEventListener('click', () => {
+                                            // Call deleteComment function passing commentId
+                                            deleteComment(comment.commentId);
+                                        });
+                                        commentDiv.appendChild(deleteButton);
+                                    }
+                                
+                                    // Append the comment div to the comments section
+                                    commentsSection.appendChild(commentDiv);
+                                });
+                                
+                            } else {
+                                console.error('No comments found.');
+                            }
+                        })
+                        .catch(error => console.error('Error fetching comments:', error));
+                } else {
+                    console.error('No record found.');
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    } else {
+        console.error('No sharingId provided in URL.');
+    }
+});
+
 // Function to handle form submission
 function submitForm() {
     // Get form data
@@ -33,8 +121,6 @@ function submitForm() {
                 categoryId: category
             };
     
-            console.log(requestData);
-    
             // Send data to server
             fetch('../../api/sharing.php', {
                 method: 'POST',
@@ -44,25 +130,20 @@ function submitForm() {
                 body: JSON.stringify(requestData)
             })
             .then(response => {
-                console.log(response); // Log the response for debugging
                 if (response.ok) {
-                    console.log("berjaya");
                     window.location.href = '../../View/member/homepageMember.html';
                 } else {
                     console.error('Failed to submit form');
                 }
             })
             .catch(error => {
-                // Handle error
                 console.error('There was a problem with the fetch operation:', error);
-                // You can add further error handling here, like showing an error message to the user
             });
         };
         
         // Read the selected file as a data URL
         reader.readAsDataURL(file);
     } else {
-        // If no file is selected, handle the case accordingly (e.g., display an error message)
         console.error('No image file selected');
     }
 }
@@ -75,6 +156,146 @@ document.addEventListener('DOMContentLoaded', function() {
         submitForm();
     });
 });
+
+// Function to handle form submission for posting new comment
+document.addEventListener('DOMContentLoaded', function() {
+    const commentForm = document.getElementById('commentForm');
+    commentForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get input values
+        const commentInput = document.getElementById('commentInput').value.trim(); // Trim any whitespace
+
+        const params = new URLSearchParams(window.location.search);
+        const sharingId = params.get('sharingId');
+        const userId = localStorage.getItem('userId');
+
+        // Validate comment input
+        if (commentInput === '') {
+            alert('Please enter a comment.'); // You can implement a better UI feedback
+            return;
+        }
+
+        // Prepare data to send
+        const data = {
+            comment: commentInput,
+            userId: userId,
+            sharingId: sharingId
+        };
+
+        // Send comment data to server
+        fetch('../../api/comment.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            document.getElementById('commentInput').value = '';
+            location.reload(); // Example: Reload the page
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Failed to post comment. Please try again.');
+        });
+    });
+});
+
+// Function to handle updating a comment
+function updateComment(event) {
+    event.preventDefault();
+    const commentId = document.getElementById('commentForm').getAttribute('data-comment-id');
+    const updatedComment = document.getElementById('commentInput').value.trim();
+    const userId = localStorage.getItem('userId');
+    const sharingId = new URLSearchParams(window.location.search).get('sharingId');
+
+    if (!updatedComment) {
+        alert('Please enter a valid comment.');
+        return;
+    }
+
+    const data = {
+        comment: updatedComment,
+        userId: userId,
+        sharingId: sharingId
+    };
+
+    fetch(`../../api/comment.php?commentId=${commentId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (response.ok) {
+            // Update UI after successful update
+            location.reload(); // Reload page to reflect changes
+        } else {
+            console.error('Failed to update comment');
+        }
+    })
+    .catch(error => console.error('Error updating comment:', error));
+}
+
+
+// Function to handle submitting a new comment
+function submitNewComment(event) {
+    event.preventDefault();
+    const commentInput = document.getElementById('commentInput').value.trim();
+
+    if (!commentInput) {
+        alert('Please enter a comment.');
+        return;
+    }
+
+    const data = {
+        comment: commentInput,
+        userId: localStorage.getItem('userId'),
+        sharingId: new URLSearchParams(window.location.search).get('sharingId')
+    };
+
+    fetch('../../api/comment.php?commentId=${commentId}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('commentInput').value = '';
+        location.reload();
+    })
+    .catch(error => console.error('Error posting new comment:', error));
+}
+
+// Function to handle deleting a comment
+function deleteComment(commentId) {
+    if (!confirm('Are you sure you want to delete this comment?')) {
+        return;
+    }
+
+    fetch(`../../api/comment.php?commentId=${commentId}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload(); // Reload page or update comments section
+        } else {
+            console.error('Failed to delete comment');
+        }
+    })
+    .catch(error => console.error('Error deleting comment:', error));
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     // Retrieve userId from localStorage
@@ -113,128 +334,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log('userId not found in local storage.');
     }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const params = new URLSearchParams(window.location.search);
-    const sharingId = params.get('sharingId');
-    const userId = params.get('userId');
-
-    if (sharingId) {
-        fetch(`../../api/sharing.php?action=listById&sharingId=${sharingId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.data) {
-                    const post = data.data;
-                    document.getElementById('post-title').textContent = post.title;
-                    document.getElementById('post-description').textContent = post.titleDescription;
-                    document.getElementById('main-image').src = 'data:image/jpeg;base64,' + post.image;
-
-                    // Fetch comments
-                    fetch(`../../api/comment.php?sharingId=${sharingId}`)
-                        .then(response => response.json())
-                        .then(commentData => {
-                            if (commentData && commentData.data) {
-                                const commentsSection = document.querySelector('.comments-section');
-                                commentsSection.innerHTML = '<h2>Comments</h2>'; // Clear existing comments
-                                commentData.data.forEach(comment => {
-                                    const commentDiv = document.createElement('div');
-                                    commentDiv.className = 'comment';
-                                    
-                                    const commentAuthor = document.createElement('span');
-                                    commentAuthor.className = 'comment-author';
-                                    commentAuthor.textContent = comment.name; // User's name
-                                    
-                                    const commentText = document.createElement('p');
-                                    commentText.textContent = comment.comment;
-                                    
-                                    const commentTime = document.createElement('span');
-                                    commentTime.className = 'comment-time';
-                                    commentTime.textContent = '2w'; // Placeholder for comment time
-
-                                    const likeButton = document.createElement('button');
-                                    likeButton.className = 'like-button';
-                                    likeButton.textContent = '👍 8'; // Placeholder for like count
-
-                                    commentDiv.appendChild(commentAuthor);
-                                    commentDiv.appendChild(commentText);
-                                    commentDiv.appendChild(commentTime);
-                                    commentDiv.appendChild(likeButton);
-                                    
-                                    commentsSection.appendChild(commentDiv);
-                                });
-                            } else {
-                                console.error('No comments found.');
-                            }
-                        })
-                        .catch(error => console.error('Error fetching comments:', error));
-                } else {
-                    console.error('No record found.');
-                }
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    } else {
-        console.error('No sharingId provided in URL.');
-    }
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const commentForm = document.getElementById('commentForm');
-    commentForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        // Get input values
-        const commentInput = document.getElementById('commentInput').value.trim(); // Trim any whitespace
-
-        const params = new URLSearchParams(window.location.search);
-        const sharingId = params.get('sharingId');
-
-        const userId = localStorage.getItem('userId');
-
-
-        // Validate comment input
-        if (commentInput === '') {
-            alert('Please enter a comment.'); // You can implement a better UI feedback
-            return;
-        }
-
-        // Prepare data to send
-        const data = {
-            comment: commentInput,
-            userId: userId,
-            sharingId: sharingId
-        };
-
-        // Send comment data to server
-        fetch('../../api/comment.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Handle successful response
-            console.log('Success:', data);
-            // Clear comment input after successful submission (optional)
-            document.getElementById('commentInput').value = '';
-            // You can update the UI to show the new comment dynamically
-            // For simplicity, reload the page or update comments section after successful submission
-            location.reload(); // Example: Reload the page
-        })
-        .catch((error) => {
-            // Handle error
-            console.error('Error:', error);
-            alert('Failed to post comment. Please try again.'); // You can implement a better UI feedback
-        });
-    });
 });
 
 
