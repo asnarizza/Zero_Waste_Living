@@ -29,7 +29,7 @@ require 'connection.php';
                 // Check if the insertion was successful
                 if ($stmt->rowCount() > 0) {
                     // Insertion successful
-                    http_response_code(201); // Created
+                    http_response_code(200); // Created
                     $response = [
                         'message' => "Comment posted successfully."
                     ];

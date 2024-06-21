@@ -180,3 +180,81 @@ function sendUpdateRequest(sharingId, title, titleDescription, categoryId, image
         console.error('Error updating post details:', error);
     });
 }
+
+function deletePost() {
+    const sharingId = getSharingIdFromURL(); // Adjust to get sharingId as needed
+
+    if (!sharingId) {
+        alert("Cannot delete post: sharingId not found.");
+        return;
+    }
+
+    if (confirm("Are you sure you want to delete this post?")) {
+        const url = `../../api/sharing.php?action=delete&sharingId=${sharingId}`;
+
+        fetch(url, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message); // Alert success or error message
+
+            // Redirect to profileMember.html after successful deletion
+            window.location.href = '../member/profileMember.html'; // Adjust URL as needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete post.');
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve userId from localStorage
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+        // Fetch user profile data using userId
+        fetch(`../../api/auth/profile.php?userId=${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse response as JSON
+            })
+            .then(userData => {
+                if (userData && userData.image) {
+                    console.log('Parsed user data:', userData);
+
+                    // Update profile image for profile-icon
+                    const profileIcon = document.getElementById('profileIcon');
+                    profileIcon.textContent = ''; // Clear existing content ('A')
+
+                    const profileImage = document.createElement('img');
+                    profileImage.src = 'data:image/jpeg;base64,' + userData.image;
+                    profileImage.alt = 'Profile Image'; // Add alt text for accessibility
+                    profileImage.classList.add('avatar-image'); // Optionally add a class for styling
+
+                    profileIcon.appendChild(profileImage); // Append the image to profileIcon div
+                } else {
+                    console.log('User data or profile image not found.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user profile data:', error);
+            });
+    } else {
+        console.log('userId not found in local storage.');
+    }
+});
+
+
+function getSharingIdFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('sharingId');
+}

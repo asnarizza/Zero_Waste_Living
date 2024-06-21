@@ -164,6 +164,68 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const cardContainer = document.getElementById('card-container');
+
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+            searchPosts(query);
+        } else {
+            cardContainer.innerHTML = ''; // Clear the card container if the input is empty
+        }
+    });
+
+    function searchPosts(query) {
+        const encodedQuery = encodeURIComponent(query); // Encode the query parameter
+
+        fetch(`http://localhost/Zero_Waste_Living/api/sharing.php?action=listByTitle&title=${encodedQuery}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.data && data.data.length > 0) {
+                    displayResults(data.data);
+                } else {
+                    cardContainer.innerHTML = `<p>No records found.</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                cardContainer.innerHTML = `<p>An error occurred while fetching the data.</p>`;
+            });
+    }
+
+    function displayResults(items) {
+        cardContainer.innerHTML = '';
+        items.forEach(item => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            const overlay = document.createElement('div');
+            overlay.classList.add('overlay');
+
+            const title = document.createElement('h2');
+            title.textContent = item.title;
+
+            const image = document.createElement('img');
+            // Assuming item.image is a base64 encoded string
+            image.src = 'data:image/jpeg;base64,' + item.image;
+            image.alt = item.title; // Optionally set alt attribute
+
+            // Add event listener to each card
+            card.addEventListener('click', function() {
+                // Redirect to detail page with the specific item ID and user ID
+                window.location.href = 'detailPage.html?sharingId=' + item.sharingId + '&userId=' + item.userId;
+            });
+
+            // Append elements to construct the card
+            overlay.appendChild(image);
+            overlay.appendChild(title);
+            card.appendChild(overlay);
+            cardContainer.appendChild(card);
+        });
+    }
+});
 
 
 

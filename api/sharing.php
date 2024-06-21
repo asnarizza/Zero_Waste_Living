@@ -151,6 +151,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $response->error = "userId parameter is required for listByUserId action.";
                     }
                     break;
+
+                    case 'listByTitle':
+                        if (isset($_GET['title'])) {
+                            $title = $_GET['title'];
+                            try {
+                                // Prepare case-insensitive search with wildcard for partial matching
+                                $stmt = $db->prepare("SELECT sharingId, title, titleDescription, image FROM sharing WHERE LOWER(title) LIKE LOWER(:title)");
+                                $likeTitle = "%" . trim($title) . "%";
+                                $stmt->bindParam(':title', $likeTitle, PDO::PARAM_STR);
+                                $stmt->execute();
+                                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                                // Debugging: log the title and the SQL query
+                                error_log("Title parameter: " . $title);
+                                error_log("LIKE query: " . $stmt->queryString);
+                                error_log("LIKE value: " . $likeTitle);
+                    
+                                // Check if records are found
+                                if ($results) {
+                                    // Set response code to OK
+                                    http_response_code(200);
+                                    // Set response data
+                                    $response->data = $results;
+                                } else {
+                                    // No records found
+                                    http_response_code(404);
+                                    $response->error = "No records found for the given title.";
+                                }
+                            } catch (Exception $e) {
+                                // Error occurred while fetching records
+                                http_response_code(500);
+                                $response->error = "Error occurred: " . $e->getMessage();
+                            }
+                        } else {
+                            http_response_code(400); // Bad Request
+                            $response->error = "title parameter is required for listByTitle action.";
+                        }
+                        break;
+                    
         
                 default:
                     http_response_code(400); // Bad Request
@@ -237,7 +276,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'error' => "sharingId parameter is required in the URL."
         ];
     }
-} 
+}elseif ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    // Check if the sharingId parameter is provided
+    if (isset($_GET['sharingId'])) {
+        $sharingId = $_GET['sharingId'];
+        try {
+            // Prepare the SQL statement for deleting the record
+            $stmt = $db->prepare("DELETE FROM sharing WHERE sharingId = :sharingId");
+            $stmt->bindParam(':sharingId', $sharingId);
+            $stmt->execute();
+
+            // Check if the deletion was successful
+            if ($stmt->rowCount() > 0) {
+                // Deletion successful
+                http_response_code(200); // OK
+                $response = [
+                    'message' => "Deleted successfully."
+                ];
+            } else {
+                // No record deleted (likely sharingId not found)
+                http_response_code(404); // Not Found
+                $response = [
+                    'error' => "No record found to delete."
+                ];
+            }
+        } catch (Exception $e) {
+            // Error occurred while deleting the record
+            http_response_code(500); // Internal Server Error
+            $response = [
+                'error' => "Error occurred: " . $e->getMessage()
+            ];
+        }
+    } else {
+        // sharingId parameter is required for delete action
+        http_response_code(400); // Bad Request
+        $response = [
+            'error' => "sharingId parameter is required for delete."
+        ];
+    }
+}
 // Before sending the JSON response, set the content type header
 header('Content-Type: application/json');
 
