@@ -38,25 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'])) {
             break;
 
             case 'fetchUsers':
-                // Handle GET requests to fetch users
+                // Handle GET requests to fetch users with roleId=2 and their gender
                 try {
-                    $sql = "SELECT userId, gender FROM user";
-            
+                    $roleId = 2; // Assuming roleId 2 is for regular users
+    
+                    $sql = "SELECT userId, gender FROM user WHERE roleId = :roleId";
+    
                     $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':roleId', $roleId);
                     $stmt->execute();
                     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+    
                     if ($users) {
-                        $formattedUsers = [];
-                        foreach ($users as $user) {
-                            $formattedUsers[] = [
-                                'userId' => (int)$user['userId'],
-                                'gender' => $user['gender']
-                            ];
-                        }
-            
                         http_response_code(200); // OK
-                        echo json_encode($formattedUsers);
+                        echo json_encode($users);
                         exit();
                     } else {
                         http_response_code(404); // Not Found
@@ -67,13 +62,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'])) {
                     $response->error = "Error occurred: " . $e->getMessage();
                 }
                 break;
-            
+    
+            default:
+                // Action parameter not provided or invalid request method
+                http_response_code(400); // Bad Request
+                $response->error = "Invalid action.";
+                break;
+        }
+    } else {
+        // Action parameter not provided or invalid request method
+        http_response_code(400); // Bad Request
+        $response->error = "Invalid request.";
     }
-} else {
-    // Action parameter not provided or invalid request method
-    http_response_code(400); // Bad Request
-    $response->error = "Invalid request.";
-}
 
 // Set content type header
 header('Content-Type: application/json');

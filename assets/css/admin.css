@@ -60,7 +60,7 @@ aside {
     width: 250px;
     height: 100vh;
     position: fixed;
-    top: 70px; /* Adjust to account for the fixed header */ 
+    top: 70px; /* Adjust to account for the fixed header */
     left: 0;
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -288,4 +288,54 @@ main {
     .card, .user-engagement {
         min-width: 100%;
     }
+}
+
+.chart-container {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.total-container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.total-box {
+    display: inline-block;
+    padding: 10px;
+    background-color:#f0f0f0;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    max-width: 300px; /* Set a maximum width */
+    text-align: center; /* Center the text */
+}
+
+.total-box h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.chart-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+canvas {
+    width: 400px !important; /* Adjust width as needed */
+    height: 400px !important; /* Adjust height as needed */
 }
